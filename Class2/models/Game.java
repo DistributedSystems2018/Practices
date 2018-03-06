@@ -1,3 +1,5 @@
+package models;
+
 public class Game {
     private Board board;
     private int turn=1, who=1;
