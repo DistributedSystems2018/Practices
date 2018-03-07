@@ -8,15 +8,16 @@ import java.net.*;
 class Client {
 
 	public Logger logger = Logger.getLogger(this.getClass().getName());
-	public static final String DISC = "DISCONNECT";
 
 	private Scanner reader;
 	private PrintWriter inputPrinter;
+	private int clientId;
 
-	public Client(Socket clientSocket) {
+	public Client(Socket clientSocket, int id) {
 		try {
 			reader = new Scanner(clientSocket.getInputStream());
 			inputPrinter = new PrintWriter(clientSocket.getOutputStream());
+			clientId = id;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -24,6 +25,7 @@ class Client {
 	}
 
 	public String readMsg() {
+		// Blocking request
 		while (!reader.hasNext()) {
 		}
 		String message = reader.nextLine();
@@ -60,5 +62,9 @@ class Client {
 	public void closeClient() {
 		inputPrinter.close();
 		reader.close();
+	}
+
+	public int getId() {
+		return clientId;
 	}
 }

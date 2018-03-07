@@ -13,6 +13,7 @@ class Server {
 	private BlockingDeque<Client> clientList;
 	public Logger logger = Logger.getLogger(this.getClass().getName());
 	public int totalConnections = 0;
+	private int clientId = 0;
 	private int internalSum = 0;
 
 	public Server(int port) {
@@ -28,9 +29,10 @@ class Server {
 		try {
 			logger.info("Started listening for client");
 			Socket newClient = clientListener.accept();
-			clientList.add(new Client(newClient));
+			clientList.add(new Client(newClient, clientId));
 			logger.info("Client connected from " + newClient.getInetAddress());
 			totalConnections++;
+			clientId++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -119,6 +121,23 @@ class Server {
 		}
 	}
 
+	// Pass client as sending client so it doesnt receive same message sent
+	public void broadcastMessage(Client client, String message) {
+		for (Client cli : clientList) {
+			if (!cli.equals(client)) {
+				cli.writeMessage(message);
+			}
+		}
+	}
+
+	public void broadcastMessage(int id, String message) {
+		for (Client cli : clientList) {
+			if (id != cli.getId()) {
+				cli.writeMessage(message);
+			}
+		}
+	}
+
 	public Client getClient(int index) {
 		Iterator<Client> clientIterator = clientList.iterator();
 		int i = 0;
@@ -155,5 +174,8 @@ class Server {
 	public int getSum() {
 		return internalSum;
 	}
-	
+
+	public BlockingDeque<Client> getClientList() {
+		return clientList;
+	}
 }
