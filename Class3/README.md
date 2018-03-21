@@ -9,7 +9,7 @@ This material is adapted from Professor Robert Kitlei class notes.
 * [About Threads](https://docs.oracle.com/javase/7/docs/api/java/lang/Thread.html)
 * [Runnable interface ](https://docs.oracle.com/javase/6/docs/api/java/lang/Runnable.html)
 * [About locks and synchronized statements]( https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html)
-
+* [Synchronized Methods](https://docs.oracle.com/javase/tutorial/essential/concurrency/syncmeth.html)
 
 
 

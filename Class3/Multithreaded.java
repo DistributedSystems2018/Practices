@@ -3,11 +3,12 @@ class Multithreaded
 {
     public static void main(String[] args) throws Exception {
         Object lock = new Object();
+        SynchronizedCounter s = new SynchronizedCounter();
 
-        Thread t1 = new TextPrintThread("aaaaaaaa", lock);
-        Thread t2 = new TextPrintThread("bbbbbbbb", lock);
-        new TextPrintThread("cccccccc", lock).join();
-        new TextPrintThread("xxxxxxxx", lock).join();
+        Thread t1 = new TextPrintThread("aaaaaaaa", lock, s);
+        Thread t2 = new TextPrintThread("bbbbbbbb", lock, s);
+        //new TextPrintThread("cccccccc", lock).start();
+        //new TextPrintThread("xxxxxxxx", lock).start();
         t1.start();
         //t1.join();
         t2.start();
@@ -21,10 +22,11 @@ class Multithreaded
 class TextPrintThread extends Thread {
     String text;
     Object lock;
-
-    public TextPrintThread(String text, Object lock) {
+    SynchronizedCounter s;
+    public TextPrintThread(String text, Object lock, SynchronizedCounter s) {
         this.text = text;
         this.lock = lock;
+        this.s = s;
     }
 
     public void run() {
@@ -34,22 +36,22 @@ class TextPrintThread extends Thread {
             try{
               sleep(1);
             } catch (Exception e){}
-
-            System.out.println(text);
-            //myPrintln(text);
+            s.increment();
+            //System.out.println(text);
+            myPrintln(text);
         }
+        System.out.println(s.value());
     }
 
-    //void myPrintln(String text)
-//    synchronized void myPrintln(String text)
-    {
-//        synchronized (this) {
-        synchronized (lock) {
-            for (char c : text.toCharArray())
-            {
-                System.out.print(c);
-            }
-            System.out.println();
-        }
+//     void myPrintln(String text)
+     synchronized void myPrintln(String text){
+       //synchronized (this) {
+          //synchronized (lock) {
+             for (char c : text.toCharArray())
+             {
+                 System.out.print(c);
+             }
+             System.out.println();
+         //}
     }
 }
