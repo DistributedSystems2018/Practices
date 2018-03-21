@@ -22,11 +22,11 @@ class Multithreaded
 class TextPrintThread extends Thread {
     String text;
     Object lock;
-    SynchronizedCounter s;
-    public TextPrintThread(String text, Object lock, SynchronizedCounter s) {
+
+    public TextPrintThread(String text, Object lock) {
         this.text = text;
         this.lock = lock;
-        this.s = s;
+
     }
 
     public void run() {
@@ -36,7 +36,7 @@ class TextPrintThread extends Thread {
             try{
               sleep(1);
             } catch (Exception e){}
-            s.increment();
+
             //System.out.println(text);
             myPrintln(text);
         }
