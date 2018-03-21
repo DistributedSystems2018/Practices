@@ -5,8 +5,8 @@ class Multithreaded
         Object lock = new Object();
         SynchronizedCounter s = new SynchronizedCounter();
 
-        Thread t1 = new TextPrintThread("aaaaaaaa", lock, s);
-        Thread t2 = new TextPrintThread("bbbbbbbb", lock, s);
+        Thread t1 = new TextPrintThread("aaaaaaaa", lock);
+        Thread t2 = new TextPrintThread("bbbbbbbb", lock);
         //new TextPrintThread("cccccccc", lock).start();
         //new TextPrintThread("xxxxxxxx", lock).start();
         t1.start();
