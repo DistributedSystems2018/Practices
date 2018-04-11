@@ -27,38 +27,47 @@ class Server extends Thread{
     Scanner sc ;
     PrintWriter pw;
     ObjectInputStream ois;
-
+    ObjectOutputStream outObject;
 
     public Server(Socket s) throws Exception{
       sc = new Scanner(s.getInputStream());
       pw = new PrintWriter(s.getOutputStream());
+      this.s = s;
       ois = new ObjectInputStream(s.getInputStream());
+      outObject = new ObjectOutputStream(s.getOutputStream());
     }
 
     public void run(){
         try{
           Person p;
+          Person p2;
           p =  (Person) ois.readObject();
-          System.out.println("cool");
-        }catch(Exception e){
-          System.out.println("not cool");
-        }
+          p2 = (Person) ois.readObject();
+          System.out.println(p2.getName());
+          p2.setFamilyName(p2.getFamilyName()+" "+p.getFamilyName());
+          p2.setMessage("happy wedding");
 
-
-
-
-        for (int i = 0; i < 10; ++i)
-        {
-          pw.println("hi");
-          pw.flush();
-        }
-
-        try{
+          outObject.writeObject(p2);
           s.close();
-          System.out.println("Finished Thread");
-        }catch(IOException e){
-          System.out.println("Thread Finished, socket couldn't be closed");
+        }catch(Exception e){
+          System.out.println(e);
         }
+
+
+
+
+        // for (int i = 0; i < 10; ++i)
+        // {
+        //   pw.println("hi");
+        //   pw.flush();
+        // }
+
+        // try{
+        //   s.close();
+        //   System.out.println("Finished Thread");
+        // }catch(IOException e){
+        //   System.out.println("Thread Finished, socket couldn't be closed");
+        // }
 
     }
 }

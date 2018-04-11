@@ -11,33 +11,34 @@ class Client
         String computer = "localhost";
 
 
-        Person p = new Person("josh");
+        Person p = new Person("josh", "smith");
+        Person p2 = new Person("amanda", "whatever");
 
-        try (
+        try {
             Socket s = new Socket(computer, port);
 
-            Scanner sc = new Scanner(s.getInputStream());
-            PrintWriter pw = new PrintWriter(s.getOutputStream());
-        ) {
 
-            /*
-              ####
-              Snippet for ObjectOutputStream
-            */
+            ObjectOutputStream oos
+              = new ObjectOutputStream(s.getOutputStream());
 
-            //ObjectOutputStream oos
-            //= new ObjectOutputStream(s.getOutputStream());
+            ObjectInputStream inputObject
+              = new ObjectInputStream(s.getInputStream());
             // = new ObjectOutputStream(new FileOutputStream("a.txt"));
-            //oos.writeObject(p);
-            //oos.flush();
-            //oos.close();
+            oos.writeObject(p);
+            oos.writeObject(p2);
+            oos.flush();
+            
+            p2 = (Person) inputObject.readObject();
+            System.out.println(p2.getFamilyName());
             //pw.println(p);
-            pw.flush();
+            //pw.flush();
 
 
 
-            int textLength = sc.nextInt();
-            System.out.println(textLength);
+            //int textLength = sc.nextInt();
+            //  System.out.println(textLength);
+        }catch(Exception e){
+
         }
 
     }
