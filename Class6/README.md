@@ -1,10 +1,10 @@
-#Exam Simulation
+# Exam Simulation
 
 This is a **shorten** version of an exam, during the exam, different rules will apply.
 
 Try to do it without help from former codes or from the Internet, during the exam you'll be allowed to use the Oracle official documentation and to use half an A4 page cheatsheet, being one edge for your cheating information and the other half with ONLY your name. The cheatsheet MUST be hand written. If a student is caught with other student's cheatsheet, both students fail the exam.
 
-##General guidance...
+
 
 ## 2 Points
 The first step is to create a Socket connection between a *Server* and a *Client*, where the *Client* receives information regarding two connections.
