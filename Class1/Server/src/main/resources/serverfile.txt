@@ -1,0 +1,3 @@
+Server has this file,
+it contains some lines
+and that's it
